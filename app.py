@@ -11,7 +11,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # SQLite database
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")  # Set a secret key for session management
+app.config['TELEGRAM_TOKEN'] = os.getenv("TELEGRAM_TOKEN")  # Set a secret key for session management
 db = SQLAlchemy(app)
 
 # Load admin credentials from environment variables
