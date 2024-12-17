@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Use url_for to link to static CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<!-- Admin Login Form -->
+{% if not session.get('admin_authenticated') %}
+    <form method="post">
+        <input type="text" name="username" placeholder="Admin Username" required>
+        <input type="password" name="password" placeholder="Admin Password" required>
+        <button type="submit">Login</button>
+    </form>
+{% else %}
+    <div class="table-container">
+        <h2>Users</h2>
+        <table>
+            <tr>
+                <th>User ID</th>
+                <th>Telegram ID</th>
+                <th>Balance</th>
+                <th>Referral Earnings</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.telegram_id }}</td>
+                <td>${{ user.balance }}</td>
+                <td>${{ user.referral_earnings }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Withdrawal Requests</h2>
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for withdrawal in withdrawals %}
+            <tr>
+                <td>{{ withdrawal.user.telegram_id }}</td>
+                <td>${{ withdrawal.amount }}</td>
+                <td>{{ withdrawal.address }}</td>
+                <td>{{ withdrawal.status }}</td>
+                <td>
+                    {% if withdrawal.status == 'Pending' %}
+                    <form method="post" action="{{ url_for('approve_withdrawal', withdrawal_id=withdrawal.id) }}">
+                        <button type="submit" class="btn">Approve</button>
+                    </form>
+                    <form method="post" action="{{ url_for('reject_withdrawal', withdrawal_id=withdrawal.id) }}">
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endif %}
+
+<!-- Use url_for to link to static JavaScript if necessary -->
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarnCash - Dashboard</title>
+    <!-- Use url_for to link the static CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <!-- Use url_for to link the static image file -->
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EarnCash Logo" class="logo">
+            <h2>Welcome, {{ username }} (ID: {{ user_id }})</h2>
+        </header>
+
+        <!-- Daily Reward Section -->
+        <section id="daily-reward">
+            <h3>Claim your daily reward</h3>
+            <button id="claim-reward" onclick="claimDailyReward()">Claim Reward</button>
+            <p id="claim-timer">Next claim in: <span id="next-claim-timer">24 hours</span></p>
+        </section>
+
+        <!-- Earning Section -->
+        <section id="earnings">
+            <h3>Watch Ads and Earn</h3>
+            <div class="ad-buttons">
+                <!-- Buttons for watching ads -->
+                <button id="ad_1" onclick="watchAd(1)">Watch Ad 1</button>
+                <div id="ad-container-1" class="ad-container"></div>
+
+                <button id="ad_2" onclick="watchAd(2)">Watch Ad 2</button>
+                <div id="ad-container-2" class="ad-container"></div>
+
+                <button id="ad_3" onclick="watchAd(3)">Watch Ad 3</button>
+                <div id="ad-container-3" class="ad-container"></div>
+
+                <button id="ad_4" onclick="watchAd(4)">Watch Ad 4</button>
+                <div id="ad-container-4" class="ad-container"></div>
+
+                <button id="ad_5" onclick="watchAd(5)">Watch Ad 5</button>
+                <div id="ad-container-5" class="ad-container"></div>
+
+                <button id="ad_6" onclick="watchAd(6)">Watch Ad 6</button>
+                <div id="ad-container-6" class="ad-container"></div>
+
+                <button id="ad_7" onclick="watchAd(7)">Watch Ad 7</button>
+                <div id="ad-container-7" class="ad-container"></div>
+
+                <button id="ad_8" onclick="watchAd(8)">Watch Ad 8</button>
+                <div id="ad-container-8" class="ad-container"></div>
+
+                <button id="ad_9" onclick="watchAd(9)">Watch Ad 9</button>
+                <div id="ad-container-9" class="ad-container"></div>
+
+                <button id="ad_10" onclick="watchAd(10)">Watch Ad 10</button>
+                <div id="ad-container-10" class="ad-container"></div>
+            </div>
+        </section>
+
+        <!-- Referral Section -->
+        <section id="referrals">
+            <h3>Your Referral Link</h3>
+            <p><a href="{{ referral_link }}" target="_blank">{{ referral_link }}</a></p>
+            <h4>Your Referrals</h4>
+            <ul>
+                {% if referrals %}
+                    {% for referral in referrals %}
+                        <li>{{ referral.username }} - Earnings: ${{ referral.earnings }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No referrals yet!</li>
+                {% endif %}
+            </ul>
+        </section>
+
+        <!-- Withdraw Section -->
+        <section id="withdraw">
+            <h3>Withdraw Funds</h3>
+            <form id="withdraw-form" onsubmit="submitWithdraw(event)">
+                <input type="number" name="amount" placeholder="Amount to withdraw" required>
+                <input type="text" name="address" placeholder="Withdrawal Address (TON/LTC)" required>
+                <button type="submit">Submit Withdrawal</button>
+            </form>
+            <p id="withdraw-status">No withdrawals yet.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <ul>
+                <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                <li><a href="#earnings" onclick="showSection('earnings')">Earnings</a></li>
+                <li><a href="#referrals" onclick="showSection('referrals')">Friends</a></li>
+                <li><a href="#withdraw" onclick="showSection('withdraw')">Withdraw</a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <!-- Use url_for to link the static JavaScript file -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
